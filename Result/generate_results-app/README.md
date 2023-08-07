@@ -88,6 +88,10 @@ const handleVotesSubmission = (submittedVotes) => {
 if (!verifyVotes(submittedVotes)) {
     setErrorMessage('Los votos no son válidos o consistentes.');
     return;
-}
+    }
+                            .
+                            .
+                            .
+
 
 ```
