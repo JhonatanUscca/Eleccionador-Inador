@@ -1,33 +1,33 @@
-# Primeros pasos con la aplicación Create React
+# Getting Started with Create React App
 
-Este proyecto se inició con [Crear aplicación React](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-En el directorio del proyecto, puede ejecutar:
+In the project directory, you can run:
 
 ### `npm start`
 
-Ejecuta la aplicación en el modo de desarrollo.\
-Abierto [http://localhost:3000](http://localhost:3000) para verlo en su navegador.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-La página se volverá a cargar cuando realice cambios.\
-También puede ver errores de pelusa en la consola.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ### `npm test`
 
-Inicia el corredor de prueba en el modo de reloj interactivo.\
-Consulte la sección sobre [running tests](https://facebook.github.io/create-react-app/docs/running-tests) para más información.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Construye la aplicación para la producción a la `build` carpeta.\
-Empaqueta correctamente React en modo de producción y optimiza la compilación para obtener el mejor rendimiento.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-La compilación se minimiza y los nombres de archivo incluyen los hashes.\
-¡Tu aplicación está lista para ser implementada!
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Consulte la sección sobre [deployment](https://facebook.github.io/create-react-app/docs/deployment) para más información.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
@@ -68,3 +68,25 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# SOLID principles
+
+
+## Principle of Single Responsibility (SRP):
+Each function and component has a single responsibility. For instance, the functions verifyVotes, calculateResults, and hasMinimumQuorum fulfill specific tasks, and the ElectionResultsComponent component focuses on the presentation and handling of the election results.
+
+<pre>
+```const ElectionResultsComponent = () => {
+  const [votes, setVotes] = useState([]);
+  const [results, setResults] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleVotesSubmission = (submittedVotes) => {
+    // Verificar si los votos son válidos y consistentes
+    if (!verifyVotes(submittedVotes)) {
+      setErrorMessage('Los votos no son válidos o consistentes.');
+      return;
+    }
+```
+</pre>
