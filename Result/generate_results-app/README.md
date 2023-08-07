@@ -76,7 +76,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ## Principle of Single Responsibility (SRP):
 Each function and component has a single responsibility. For instance, the functions verifyVotes, calculateResults, and hasMinimumQuorum fulfill specific tasks, and the ElectionResultsComponent component focuses on the presentation and handling of the election results.
 
-<pre>
+
 ```JavaScript
 const ElectionResultsComponent = () => {
 const [votes, setVotes] = useState([]);
@@ -91,4 +91,3 @@ if (!verifyVotes(submittedVotes)) {
 }
 
 ```
-</pre>
