@@ -77,16 +77,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Each function and component has a single responsibility. For instance, the functions verifyVotes, calculateResults, and hasMinimumQuorum fulfill specific tasks, and the ElectionResultsComponent component focuses on the presentation and handling of the election results.
 
 <pre>
-```const ElectionResultsComponent = () => {
-  const [votes, setVotes] = useState([]);
-  const [results, setResults] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
+```JavaScrip
+const ElectionResultsComponent = () => {
+const [votes, setVotes] = useState([]);
+const [results, setResults] = useState(null);
+const [errorMessage, setErrorMessage] = useState('');
 
-  const handleVotesSubmission = (submittedVotes) => {
-    // Verificar si los votos son válidos y consistentes
-    if (!verifyVotes(submittedVotes)) {
-      setErrorMessage('Los votos no son válidos o consistentes.');
-      return;
-    }
+const handleVotesSubmission = (submittedVotes) => {
+// Verificar si los votos son válidos y consistentes
+if (!verifyVotes(submittedVotes)) {
+    setErrorMessage('Los votos no son válidos o consistentes.');
+    return;
+}
+
 ```
 </pre>
