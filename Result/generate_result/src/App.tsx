@@ -1,65 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import mysql from 'mysql2';
+
+const TablaVotos = () => {
+  const [data, setData] = useState([]);
+
+useEffect(() => {
+  const connection = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: '',
+    database: 'tarea1'
+  });
+
+  connection.connect();
+
+  connection.query('SELECT * FROM acumulacion_votos', (error, results) => {
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      const formattedData = results.map(result => ({
+        NUMERO_CANDIDATO: result.NUMERO_CANDIDATO,
+        total_votos: result.total_votos
+      }));
+      setData(formattedData);
+    }
+  });
+
+  connection.end();
+  }, []);
 
 
-interface Resultado {
-  id: number;
-  nombre: string;
-  valor: number;
-}
+  const columns = [
+    { Header: 'Número de Candidato', accessor: 'NUMERO_CANDIDATO' },
+    { Header: 'Total de Votos', accessor: 'total_votos' }
+  ];
 
-const datosBaseDeDatos: Resultado[] = [
-  { id: 1, nombre: 'Ejemplo 1', valor: 100 },
-  { id: 2, nombre: 'Ejemplo 2', valor: 200 },
-  { id: 3, nombre: 'Ejemplo 3', valor: 300 },
-  // ... más datos
-];
-
-interface State {
-  resultados: Resultado[]; // Definimos el tipo de estado aquí
-}
-
-class RegenerarResultados extends Component<{}, State> { // Usamos State como tipo de estado
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      resultados: [],
-    };
-  }
-
-  componentDidMount() {
-    // Simulamos una llamada a la base de datos y actualizamos el estado con los resultados
-    setTimeout(() => {
-      this.setState({ resultados: datosBaseDeDatos });
-    }, 1000); // Simulamos una demora de 1 segundo para obtener los datos
-  }
-
-  render() {
-    const { resultados } = this.state;
-
-    return (
-      <div>
-        <h2>Tabla de Resultados</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {resultados.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.nombre}</td>
-                <td>{item.valor}</td>
-              </tr>
+  return (
+    <div>
+      <h2>Tabla de Acumulación de Votos</h2>
+      <table>
+        <thead>
+          <tr>
+            {columns.map(column => (
+              <th key={column.accessor}>{column.Header}</th>
             ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.map(column => (
+                <td key={column.accessor}>{row[column.accessor]}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default RegenerarResultados;
+export default TablaVotos;
