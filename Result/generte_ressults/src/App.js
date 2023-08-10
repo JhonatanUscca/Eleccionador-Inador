@@ -1,46 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import mysql from 'mysql';
+import './App.css';
+import {useState} from "react";
+import Axios from "axios";
 
-const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
-  database: 'tarea1'
-});
+function App(){
+  const [correo,setCorreo] = useState("");
+  const [numero,setNumero] = useState(0);
 
-const TablaVotos = () => {
-  const [votos, setVotos] = useState([]);
-
-  useEffect(() => {
-    connection.connect();
-    connection.query('SELECT * FROM acumulacion_votos', (error, results) => {
-      if (error) throw error;
-      setVotos(results);
+  const add = ()=>{
+    Axios.post("http://localhost:3001/create",{
+      correo:correo,
+      numero:numero
+    }).then(()=>{
+      alert("empleado resgistrado");
     });
-    connection.end();
-  }, []);
+  }
+  
 
   return (
-    <div>
-      <h2>Tabla de Acumulación de Votos</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Número de Candidato</th>
-            <th>Total de Votos</th>
-          </tr>
-        </thead>
-        <tbody>
-          {votos.map((voto) => (
-            <tr key={voto.NUMERO_CANDIDATO}>
-              <td>{voto.NUMERO_CANDIDATO}</td>
-              <td>{voto.total_votos}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="App">
+          <div className="App">
+            <label>Correo:<input
+            onChange={(event)=>{
+              setCorreo(event.target.value)
+            }}
+            type="text"/> </label>
+            <label>Numero:<input
+            onChange={(event)=>{
+              setNumero(event.target.value)
+            }}
+             type="number"/> </label>
+            <button onClick={add}>Registar</button>
+          </div>
     </div>
   );
-};
+}
 
-export default TablaVotos;
+export default App;
+//<button >Registar</button>
+
+//<button onClick={add}>Registar</button>
