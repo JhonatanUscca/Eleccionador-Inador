@@ -5,7 +5,7 @@ import Axios from "axios";
 function App() {
   const [selectedCandidate, setSelectedCandidate] = useState("");
   const [resultList,setResult] = useState([]);
-  const [name,setName] = useState("");
+  //const [name,setName] = useState("");
 
   const addVote = () => {
     if (selectedCandidate) {
@@ -18,8 +18,8 @@ function App() {
       alert("Por favor selecciona un candidato.");
     }
   }
-  const addResult = () => {
-      Axios.get("http://localhost:8000/addResult", {
+  const addResults = () => {
+      Axios.get("http://localhost:8000/addResults", {
       }).then((response) => {
         setResult(response.data)
       });
@@ -38,7 +38,7 @@ function App() {
         <button onClick={addVote}>Votar</button>
       </div>
       <div className='lista'>
-        <button onClick={addResult}>Resultados</button>
+        <button onClick={addResults}>Resultados</button>
         {
           resultList.map((val,key)=>{
             return <div className=''> {val.name}

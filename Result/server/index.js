@@ -28,7 +28,7 @@ app.post('/addVote', (req, res) => {
 
 app.get('/addResult', (req, res) => {
     const list = req.body.candidate; 
-    const instrucSQL = `SELECT name FROM candidate WHERE votes = (SELECT MAX(votes) FROM candidate WHERE lista = '${list}'`;
+    const instrucSQL = `SELECT name FROM candidate WHERE votes = (SELECT MAX(votes) FROM candidate WHERE lista = '${list}')`;
     db.query(instrucSQL, (err, resultado) => {
       if (err) {
         console.error('Error al imprimir los resultados:', err);
@@ -37,6 +37,21 @@ app.get('/addResult', (req, res) => {
         res.json({ mensaje: 'se imprimio correctamente' });
       }
     });
+});
+
+app.get('/addResults', (req, res) => {
+  //const list = req.body.candidate; 
+  const instrucSQL = `SELECT name, votes FROM candidate ORDER BY votes DESC LIMIT 1`;
+  db.query(instrucSQL, (err, resultado) => {
+    if (err) {
+      console.log(err);
+      //console.error('Error al imprimir los resultados:', err);
+      //res.status(500).json({ error: 'Error al imprimir los resultados' });
+    } else {
+      //res.json({ mensaje: 'se imprimio correctamente' });
+      res.send(resultado);
+    }
+  });
 });
 
 app.listen(8000,()=>{
