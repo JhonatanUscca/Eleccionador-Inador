@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
+    host: "127.0.0.1",
     use: "root",
     password: "",
     database: "tarea1"
@@ -24,6 +24,18 @@ app.post("/create",(req,res)=>{
             console.log(err);
         }else{
             res.send("empleado exito");
+        }
+    });
+});
+
+app.get("/empleados",(req,res)=>{
+
+    db.query('SELECT * FROM votos',
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
         }
     });
 });
