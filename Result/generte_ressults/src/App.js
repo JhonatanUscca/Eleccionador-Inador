@@ -6,6 +6,8 @@ function App(){
   const [correo,setCorreo] = useState("");
   const [numero,setNumero] = useState(0);
 
+  const [empleadoslist,setE] = useState([]);
+
   const add = ()=>{
     Axios.post("http://localhost:3001/create",{
       correo:correo,
@@ -14,8 +16,12 @@ function App(){
       alert("empleado resgistrado");
     });
   }
-  
-
+  const getE = ()=>{
+    Axios.get("http://localhost:3001/empleados",{
+    }).then((response)=>{
+      setE(response.data);
+    });
+  }
   return (
     <div className="App">
           <div className="App">
@@ -31,6 +37,14 @@ function App(){
              type="number"/> </label>
             <button onClick={add}>Registar</button>
           </div>
+            <div className='lista'>
+            <button onClick={getE}>Registar</button>
+            {
+              empleadoslist.map((val,key)=>{
+                return <div className=''> (val,correo) </div>
+              })
+            }
+            </div>
     </div>
   );
 }
