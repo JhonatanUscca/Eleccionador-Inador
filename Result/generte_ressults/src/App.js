@@ -1,55 +1,54 @@
 import './App.css';
-import {useState} from "react";
+import { useState } from "react";
 import Axios from "axios";
 
-function App(){
-  const [correo,setCorreo] = useState("");
-  const [numero,setNumero] = useState(0);
+function App() {
+  const [selectedCandidate, setSelectedCandidate] = useState("");
+  const [resultList,setResult] = useState([]);
+  const [name,setName] = useState("");
 
-  const [empleadoslist,setE] = useState([]);
+  const addVote = () => {
+    if (selectedCandidate) {
+      Axios.post("http://localhost:8000/addVote", {
+        candidate: selectedCandidate
+      }).then(() => {
+        alert("Voto registrado para el candidato " + selectedCandidate);
+      });
+    } else {
+      alert("Por favor selecciona un candidato.");
+    }
+  }
+  const addResult = () => {
+      Axios.get("http://localhost:8000/addResult", {
+      }).then((response) => {
+        setResult(response.data)
+      });
+  }
 
-  const add = ()=>{
-    Axios.post("http://localhost:3001/create",{
-      correo:correo,
-      numero:numero
-    }).then(()=>{
-      alert("empleado resgistrado");
-    });
-  }
-  const getE = ()=>{
-    Axios.get("http://localhost:3001/empleados",{
-    }).then((response)=>{
-      setE(response.data);
-    });
-  }
   return (
     <div className="App">
-          <div className="App">
-            <label>Correo:<input
-            onChange={(event)=>{
-              setCorreo(event.target.value)
-            }}
-            type="text"/> </label>
-            <label>Numero:<input
-            onChange={(event)=>{
-              setNumero(event.target.value)
-            }}
-             type="number"/> </label>
-            <button onClick={add}>Registar</button>
-          </div>
-            <div className='lista'>
-            <button onClick={getE}>Registar</button>
-            {
-              empleadoslist.map((val,key)=>{
-                return <div className=''> (val,correo) </div>
-              })
-            }
+      <div className="candidateSelection"> 
+        <h3>Selecciona un candidato</h3>
+        <select onChange={(e) => setSelectedCandidate(e.target.value)}>
+          <option value="">-- Seleccione --</option>
+          <option value="A">Candidato A</option>
+          <option value="B">Candidato B</option>
+          <option value="C">Candidato C</option>
+        </select>
+        <button onClick={addVote}>Votar</button>
+      </div>
+      <div className='lista'>
+        <button onClick={addResult}>Resultados</button>
+        {
+          resultList.map((val,key)=>{
+            return <div className=''> {val.name}
+              
             </div>
+          }
+          )
+        }
+      </div>
     </div>
   );
 }
-
 export default App;
-//<button >Registar</button>
-
-//<button onClick={add}>Registar</button>

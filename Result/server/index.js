@@ -7,39 +7,38 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "127.0.0.1",
-    use: "root",
+    host: "localhost",
+    user: "root",
     password: "",
-    database: "tarea1"
+    database: "voting"
 
 })
-
-app.post("/create",(req,res)=>{
-    const correo = req.body.correo;
-    const numero = req.body.numero;
-
-    db.query('INSERT INTO votos(corre,numero) VALUES(?,?)', [correo,numero],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("empleado exito");
-        }
+app.post('/addVote', (req, res) => {
+    const name = req.body.candidate;
+    const instrucSQL = `UPDATE candidate SET votes = votes + 1 WHERE name = '${name}'`;
+    db.query(instrucSQL, (err, resultado) => {
+      if (err) {
+        console.error('Error al actualizar los votos:', err);
+        res.status(500).json({ error: 'Error al actualizar los votos' });
+      } else {
+        res.json({ mensaje: 'Votos actualizados exitosamente' });
+      }
     });
 });
 
-app.get("/empleados",(req,res)=>{
-
-    db.query('SELECT * FROM votos',
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send(result);
-        }
+app.get('/addResult', (req, res) => {
+    const list = req.body.candidate; 
+    const instrucSQL = `SELECT name FROM candidate WHERE votes = (SELECT MAX(votes) FROM candidate WHERE lista = '${list}'`;
+    db.query(instrucSQL, (err, resultado) => {
+      if (err) {
+        console.error('Error al imprimir los resultados:', err);
+        res.status(500).json({ error: 'Error al imprimir los resultados' });
+      } else {
+        res.json({ mensaje: 'se imprimio correctamente' });
+      }
     });
 });
 
-app.listen(3001,()=>{
-    console.log("corriendo 3001")
+app.listen(8000,()=>{
+    console.log("corriendo 8000")
 })
