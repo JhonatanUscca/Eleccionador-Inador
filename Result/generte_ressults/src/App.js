@@ -3,50 +3,41 @@ import { useState } from "react";
 import Axios from "axios";
 
 function App() {
-  const [selectedCandidate, setSelectedCandidate] = useState("");
   const [resultList,setResult] = useState([]);
-  //const [name,setName] = useState("");
-
-  const addVote = () => {
-    if (selectedCandidate) {
-      Axios.post("http://localhost:8000/addVote", {
-        candidate: selectedCandidate
-      }).then(() => {
-        alert("Voto registrado para el candidato " + selectedCandidate);
-      });
-    } else {
-      alert("Por favor selecciona un candidato.");
-    }
-  }
   const addResults = () => {
       Axios.get("http://localhost:8000/addResults", {
       }).then((response) => {
         setResult(response.data)
       });
   }
-
   return (
     <div className="App">
       <div className="candidateSelection"> 
-        <h3>Selecciona un candidato</h3>
-        <select onChange={(e) => setSelectedCandidate(e.target.value)}>
-          <option value="">-- Seleccione --</option>
-          <option value="A">Candidato A</option>
-          <option value="B">Candidato B</option>
-          <option value="C">Candidato C</option>
-        </select>
-        <button onClick={addVote}>Votar</button>
+        <h2>Resultados</h2>    
       </div>
       <div className='lista'>
-        <button onClick={addResults}>Resultados</button>
+        <div className='result'>
+        <button className='button' onClick={addResults}>Generara Resultados</button>
+        <h3>El caditato con mas votos:</h3>
         {
           resultList.map((val,key)=>{
-            return <div className=''> {val.name}
-              
+            return <div className='contenedor'> {val.name}
             </div>
           }
           )
         }
+        <h3>Con la cantida de votos: </h3>
+        {
+          resultList.map((val,key)=>{
+            return <div className='contenedor'> {val.votes}
+            </div>
+          }
+          )
+        }
+        </div>
+      </div>
+      <div>
+      <button className='button'>regesar a la pagina principal</button>
       </div>
     </div>
   );

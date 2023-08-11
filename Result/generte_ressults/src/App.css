@@ -1,2 +1,43 @@
 .App {
   text-align: center;}
+
+  
+.candidateSelection {
+  color: blue;
+  width: 320px;
+  margin: 0px auto;
+  border: 1px solid rgb(255, 255, 255);
+  height: 80px;
+  background: #8be774;
+
+}
+.lista{
+  color: blue;
+  width: 320px;
+  margin: 0px auto;
+  border: 1px solid rgb(255, 255, 255);
+  height: 250px;
+  background: #8be774;
+  text-align: center;
+
+}
+.result{
+
+  margin:  20px ;
+}
+
+.button {
+  background-color: gray; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.contenedor{
+ 
+  background: white;
+}
